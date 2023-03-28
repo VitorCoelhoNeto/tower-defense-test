@@ -6,6 +6,7 @@ public class WaypointsScript : MonoBehaviour
 
     void Awake()
     {
+        // Get all the waypoints available in a list
         waypoints = new Transform[transform.childCount];
 
         for(int i = 0; i < waypoints.Length; i++)

@@ -5,13 +5,22 @@ using UnityEngine;
 public class TurretScript : MonoBehaviour
 {
     // Public variables
+    [Header("Unity Setup Fields")]
     public Transform partToRotate;
-    public float range = 15f;
     public float rotateSpeed = 10f;
     public string enemyTag = "Enemy"; // What identifies what is an enemy
 
+    [Header("Attributes")]
+    public float range = 15f;
+    public float fireRate = 1f;
+
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
+
     // Private variables
     private Transform target; // What the turret is supposed to look at (the enemy)
+    private float fireCountdown = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +75,25 @@ public class TurretScript : MonoBehaviour
         //Vector3 rotation = lookRotation.eulerAngles; // this does an instant transition, the below one does a smooth rotation 
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * rotateSpeed).eulerAngles; // Smoothly rotate between states
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f); // Apply the rotation only on the y axis (or else the entire turret would rotate in every direction)
+
+        if (fireCountdown <= 0f)
+        {
+            Shoot();
+            fireCountdown = 1f / fireRate;
+        }
+
+        fireCountdown -= Time.deltaTime;
+    }
+
+    void Shoot()
+    {
+        GameObject bulletObj = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        BulletScript bullet = bulletObj.GetComponent<BulletScript>();
+
+        if(bullet != null)
+        {
+            bullet.Seek(target);
+        }
     }
 
     void OnDrawGizmosSelected()

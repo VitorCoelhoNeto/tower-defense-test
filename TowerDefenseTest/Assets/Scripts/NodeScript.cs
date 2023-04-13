@@ -6,6 +6,7 @@ public class NodeScript : MonoBehaviour
 
     // Public variables
     public Color hoverColor;
+    public Color notEnoughMoneyColor;
     public Vector3 positionOffset;
     
     [Header("Optional")]
@@ -55,7 +56,17 @@ public class NodeScript : MonoBehaviour
         {
             return;
         }
-        rend.material.color = hoverColor;
+
+        if(buildManagerScript.HasMoney)
+        {
+            rend.material.color = hoverColor;   
+        }
+        else
+        {
+            rend.material.color = notEnoughMoneyColor;
+        }
+
+        
     }
 
     void OnMouseExit()

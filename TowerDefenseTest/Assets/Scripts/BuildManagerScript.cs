@@ -10,7 +10,10 @@ public class BuildManagerScript : MonoBehaviour
     public static BuildManagerScript instance;
     public GameObject standardTurretPrefab;
     public GameObject missileTurretPrefab;
+    public GameObject buildEffectPrefab;
     public bool CanBuild {  get{  return turretToBuild != null; }  }
+    public bool HasMoney {  get{  return PlayerStatsScript.Money >= turretToBuild.cost; }  }
+
 
     void Awake()
     {
@@ -34,6 +37,9 @@ public class BuildManagerScript : MonoBehaviour
 
         GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
         node.turret = turret;
+
+        GameObject buildEffect = (GameObject)Instantiate(buildEffectPrefab, node.GetBuildPosition(), Quaternion.identity);
+        Destroy(buildEffect, 5f);
 
         Debug.Log("Turret built. Money left: " + PlayerStatsScript.Money); // TODO
     }

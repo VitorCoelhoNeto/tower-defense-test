@@ -5,6 +5,9 @@ public class EnemyScript : MonoBehaviour
 
     // Public Variables
     public float speed = 10f;
+    public int enemyHealth = 100;
+    public int enemyValue = 25;
+    public GameObject deathEffect;
 
     // Private variables
     private Transform target;
@@ -16,6 +19,25 @@ public class EnemyScript : MonoBehaviour
         target = WaypointsScript.waypoints[0];    
     }
 
+    public void TakeDamage(int damageTaken)
+    {
+        enemyHealth -= damageTaken;
+
+        if(enemyHealth <= 0)
+        {
+            EnemyDie();
+        }
+    }
+
+    void EnemyDie()
+    {
+        PlayerStatsScript.Money += enemyValue;
+        
+        GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 5f);
+        
+        Destroy(gameObject);
+    }
 
     void Update()
     {
@@ -34,8 +56,9 @@ public class EnemyScript : MonoBehaviour
     {
         // If there are no more waypoints, the enemy has reached the end, so destroy it (and the player loses a life)
         if(wavepointIndex >= WaypointsScript.waypoints.Length - 1)
-        {
-            Destroy(gameObject);
+        {   
+            EndPath();
+            return;
         }
         else
         {
@@ -43,6 +66,11 @@ public class EnemyScript : MonoBehaviour
             wavepointIndex++;
             target = WaypointsScript.waypoints[wavepointIndex];
         }
-        
+    }
+
+    void EndPath()
+    {
+        PlayerStatsScript.Lives--;
+        Destroy(gameObject);
     }
 }

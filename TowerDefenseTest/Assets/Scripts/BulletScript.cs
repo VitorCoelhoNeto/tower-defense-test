@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
     public float speed = 70f;
     public float explosionRadius = 0f;
     public GameObject impactEffect;
+    public int bulletDamage = 50;
 
     // Update is called once per frame
     void Update()
@@ -66,7 +67,13 @@ public class BulletScript : MonoBehaviour
 
     void Damage(Transform enemy)
     {
-        Destroy(enemy.gameObject);
+        // We can't directly access the general script because each enemy has its own iteration of this script and we want that specific one for each enemy
+        EnemyScript e = enemy.GetComponent<EnemyScript>();
+
+        if(e != null)
+        {
+            e.TakeDamage(bulletDamage);
+        }
     }
 
     public void Seek(Transform _target)

@@ -2,6 +2,14 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
+/*
+* This script is in charge of handling the enemy waves spawning
+*
+* Works in close relationship with the enemy script (EnemyScript.cs)
+*
+* Used by GameObjects: GameMaster
+*/
+
 public class WaveSpawnerScript : MonoBehaviour
 {   
     // Public variables
@@ -41,6 +49,7 @@ public class WaveSpawnerScript : MonoBehaviour
         }
     }
 
+    // Instantiate (spawn) an enemy
     void SpawnEnemy()
     {
         Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);

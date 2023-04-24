@@ -1,7 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+/*
+* This script updates the UI with the current money the player (check player stats script)
+*
+* Works in close relationship with the player stats script (PlayerStatsScript.cs)
+*
+* Used by GameObjects: UI_Scene_Bottom -> Money
+*/
 
 public class MoneyUIScript : MonoBehaviour
 {

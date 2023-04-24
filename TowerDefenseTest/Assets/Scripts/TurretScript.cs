@@ -1,6 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/*
+* This script is used by the turrets to manage their mechanics such as turning, shooting and finding targets
+*
+* Works in close relationship with the enemy and bullet scripts (EnemyScript.cs BulletScript.cs)
+*
+* Used by GameObjects: Turrets prefabs (ATM MissileLauncher and StandardTurret)
+*/
 
 public class TurretScript : MonoBehaviour
 {
@@ -17,7 +23,6 @@ public class TurretScript : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-
     // Private variables
     private Transform target; // What the turret is supposed to look at (the enemy)
     private float fireCountdown = 0f;
@@ -29,6 +34,7 @@ public class TurretScript : MonoBehaviour
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
+    // Gets the closest target
     void UpdateTarget()
     {
         // Get all enemies (GameObjects with "Enemy" as Tag) every 0,5 seconds
@@ -76,8 +82,11 @@ public class TurretScript : MonoBehaviour
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * rotateSpeed).eulerAngles; // Smoothly rotate between states
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f); // Apply the rotation only on the y axis (or else the entire turret would rotate in every direction)
 
+        // Decides when to shoot, i. e., when the delay between shots reaches 0
         if (fireCountdown <= 0f)
         {
+            // If fireCountdown is below or equal to 0, it means the turret is ready to shoot again, resetting its countdown to the inverse of its fire rate in seconds
+            // Ex.: If we have a fire rate of 1, it means the turret will shoot every second, if we have a fire rate of 0,25 it means the turret will shoot every 4 seconds
             Shoot();
             fireCountdown = 1f / fireRate;
         }
@@ -85,20 +94,23 @@ public class TurretScript : MonoBehaviour
         fireCountdown -= Time.deltaTime;
     }
 
+    // Shooting mechanics
     void Shoot()
     {
+        // Instantiate the bullet and get its bullet script to assign the target next
         GameObject bulletObj = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         BulletScript bullet = bulletObj.GetComponent<BulletScript>();
 
+        // Invoke the bullet's Seek function to give it the target
         if(bullet != null)
         {
             bullet.Seek(target);
         }
     }
 
+    // Draw the turret range on editor
     void OnDrawGizmosSelected()
     {
-        // Draw the turret range on editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }

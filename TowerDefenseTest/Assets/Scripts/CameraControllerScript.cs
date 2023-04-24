@@ -1,5 +1,11 @@
 using UnityEngine;
 
+/*
+* This script allows for movement controls with mouse and WASD as well as zoom in/out with mouse wheel
+*
+* Used by GameObjects: MainCamera
+*/
+
 public class CameraControllerScript : MonoBehaviour
 {
 
@@ -16,6 +22,7 @@ public class CameraControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If "ESC" is pressed, disable mouse controles, press again to enable
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             doMouseMovement = !doMouseMovement;
@@ -25,6 +32,7 @@ public class CameraControllerScript : MonoBehaviour
             return;
         }
 
+        // WASD and mouse pan controls (Unrestricted TODO)
         if(Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
@@ -42,6 +50,12 @@ public class CameraControllerScript : MonoBehaviour
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
         }
 
+        // Zoom (Mouse Wheel) controls: 
+        //      - Get input 
+        //      - Get current camera position 
+        //      - Scroll in the y axis according to scroll speed and time 
+        //      - Limit with clamp
+        //      - Update position accordingly
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         Vector3 pos = transform.position;

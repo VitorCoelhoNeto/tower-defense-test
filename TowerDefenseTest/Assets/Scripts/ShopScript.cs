@@ -15,7 +15,8 @@ public class ShopScript : MonoBehaviour
     // These two variables are not the prefabs directly because we want a class that allows us to select
     //      the prefab with an associated cost to it, hence, the turret blueprint class
     public TurretBlueprintScript standardTurret;
-    public TurretBlueprintScript missileTurret; 
+    public TurretBlueprintScript missileTurret;
+    public TurretBlueprintScript laserTurret;
 
     // Private variables
     BuildManagerScript buildManagerScript;
@@ -38,6 +39,13 @@ public class ShopScript : MonoBehaviour
     {
         Debug.Log("Missile Launcher Selected"); // TODO
         buildManagerScript.SelectTurretToBuild(missileTurret);
+    }
+
+    // Select the Laser turret
+    public void SelectLaserTurret()
+    {
+        Debug.Log("Laser Turret Selected"); // TODO
+        buildManagerScript.SelectTurretToBuild(laserTurret);
     }
 
 }

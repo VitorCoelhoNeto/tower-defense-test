@@ -17,8 +17,6 @@ public class BuildManagerScript : MonoBehaviour
 
     // Public variables
     public static BuildManagerScript instance;
-    public GameObject standardTurretPrefab;
-    public GameObject missileTurretPrefab;
     public GameObject buildEffectPrefab;
     public bool CanBuild {  get{  return turretToBuild != null; }  } // Check if there is a turret selected or not
     public bool HasMoney {  get{  return PlayerStatsScript.Money >= turretToBuild.cost; }  } // Check if player has money for the selected turret or not

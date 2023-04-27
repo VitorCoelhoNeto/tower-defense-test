@@ -27,6 +27,8 @@ public class TurretScript : MonoBehaviour
     [Header("Attributes (Uses Laser)")]
     public bool useLaser = false;
     public LineRenderer lineRenderer;
+    public ParticleSystem laserImpactEffect;
+    public Light laserImpactLight;
 
     // Private variables
     private Transform target; // What the turret is supposed to look at (the enemy)
@@ -74,6 +76,8 @@ public class TurretScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        fireCountdown -= Time.deltaTime;
+
         // If there are no enemies nearby, do nothing. If turret uses laser type of projectile, disable the laser
         if(target == null)
         {
@@ -82,6 +86,8 @@ public class TurretScript : MonoBehaviour
                 if(lineRenderer.enabled)
                 {
                     lineRenderer.enabled = false;
+                    laserImpactEffect.Stop();
+                    laserImpactLight.enabled = false;
                 }
             }
             return;
@@ -105,7 +111,7 @@ public class TurretScript : MonoBehaviour
                 fireCountdown = 1f / fireRate;
             }
 
-            fireCountdown -= Time.deltaTime;
+            //fireCountdown -= Time.deltaTime; // Fire countdown goes up to the beginning so that it still goes down, even if there is no target locked
         }
     }
 
@@ -126,10 +132,17 @@ public class TurretScript : MonoBehaviour
         if(!lineRenderer.enabled)
         {
             lineRenderer.enabled = true;
+            laserImpactEffect.Play();
+            laserImpactLight.enabled = true;
         }
         // Set beggining of the laser to the firepoint and the end of the laser to the target's position (hence the 0, and 1, as in beggining of line and end of line)
         lineRenderer.SetPosition(0, firePoint.position);
         lineRenderer.SetPosition(1, target.position);
+
+        // Laser impact effect logic, so that the cone looks towards the turret and is placed on top of the enemy minus a little bit off
+        Vector3 turretDir = firePoint.position - target.position;
+        laserImpactEffect.transform.position = target.position + turretDir.normalized;
+        laserImpactEffect.transform.rotation = Quaternion.LookRotation(turretDir);
     }
 
     // Shooting mechanics

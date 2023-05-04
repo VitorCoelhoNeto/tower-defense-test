@@ -26,6 +26,8 @@ public class TurretScript : MonoBehaviour
 
     [Header("Attributes (Uses Laser)")]
     public bool useLaser = false;
+    public int damageOverTime = 30; // Laser Turret DPS
+    public float slowAmount = 0.5f; // Percentage
     public LineRenderer lineRenderer;
     public ParticleSystem laserImpactEffect;
     public Light laserImpactLight;
@@ -33,6 +35,7 @@ public class TurretScript : MonoBehaviour
     // Private variables
     private Transform target; // What the turret is supposed to look at (the enemy)
     private float fireCountdown = 0f;
+    private EnemyScript targetEnemyScript;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +69,7 @@ public class TurretScript : MonoBehaviour
         if(nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
+            targetEnemyScript = nearestEnemy.GetComponent<EnemyScript>();
         }
         else
         {
@@ -128,6 +132,12 @@ public class TurretScript : MonoBehaviour
     // What happens if the turret uses the laser projectile type
     void LaserUse()
     {
+        // Laser Damage
+        targetEnemyScript.TakeDamage(damageOverTime * Time.deltaTime);
+
+        // Laser Slow Effect
+        targetEnemyScript.Slow(slowAmount);
+
         // Check if laser is "turned on", if not, turn it on
         if(!lineRenderer.enabled)
         {
@@ -135,6 +145,7 @@ public class TurretScript : MonoBehaviour
             laserImpactEffect.Play();
             laserImpactLight.enabled = true;
         }
+
         // Set beggining of the laser to the firepoint and the end of the laser to the target's position (hence the 0, and 1, as in beggining of line and end of line)
         lineRenderer.SetPosition(0, firePoint.position);
         lineRenderer.SetPosition(1, target.position);

@@ -3,6 +3,8 @@ using UnityEngine;
 /*
 * This script allows for movement controls with mouse and WASD as well as zoom in/out with mouse wheel
 *
+* Uses the gameOver variable from GameManagerScript.cs to know when the game is over
+*
 * Used by GameObjects: MainCamera
 */
 
@@ -22,6 +24,14 @@ public class CameraControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Disable camera controls if game is over
+        if(GameManagerScript.gameOver)
+        {
+            // TODO change position back to initial
+            this.enabled = false;
+            return;
+        }
+
         // If "ESC" is pressed, disable mouse controles, press again to enable
         if(Input.GetKeyDown(KeyCode.Escape))
         {

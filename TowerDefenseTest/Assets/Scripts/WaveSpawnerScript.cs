@@ -5,11 +5,12 @@ using UnityEngine.UI;
 /*
 * This script is in charge of handling the enemy waves spawning
 *
-* Works in close relationship with the enemy script (EnemyScript.cs)
+* Works in close relationship with the enemy and PlayerStats scripts (EnemyScript.cs and PlayerStatsScript)
 *
 * Used by GameObjects: GameMaster
 */
 
+// TODO: Only begin new wave on previous one is cleared, or when player wants new wave to spawn
 public class WaveSpawnerScript : MonoBehaviour
 {   
     // Public variables
@@ -42,6 +43,7 @@ public class WaveSpawnerScript : MonoBehaviour
 
         // Spawn as many enemies as the wave number
         waveNum += 1;
+        PlayerStatsScript.roundsSurvived++;
         for(int i = 0; i < waveNum; i++)
         {
             SpawnEnemy();

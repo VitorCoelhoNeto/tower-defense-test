@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 *   - Get the turret build position;
 *   - Allow the node to know there is/isn't a turret already on it
 *
-* Works in close relationship with the build manager script (BuildManagerScript.cs)
+* Works in close relationship with the build manager, turretBlueprint and NodeUI scripts (BuildManagerScript.cs, TurretBlueprintScript.cs and NodeUIScript.cs)
 *
 * Used by GameObjects: Nodes' children
 */
@@ -22,8 +22,12 @@ public class NodeScript : MonoBehaviour
     public Color notEnoughMoneyColor;
     public Vector3 positionOffset;
     
-    [Header("Optional")]
+    [HideInInspector]
     public GameObject turret;
+    [HideInInspector]
+    public TurretBlueprintScript turretBlueprint;
+    [HideInInspector]
+    public bool isUpgraded = false;
 
     // Private variables
     private Renderer rend;
@@ -47,20 +51,97 @@ public class NodeScript : MonoBehaviour
             return;
         }
         
+        // Checks if there is already a turret built on this node
+        if(turret != null)
+        {
+            // If we click the node when it already has a turret there, we select the node to open the Node Turret UI
+            buildManagerScript.SelectNode(this);
+            return;
+        }
+
         // Checks if there is a turret currently selected
         if(!buildManagerScript.CanBuild)
         {
             return;
         }
-        // Checks if there is already a turret built on this node
-        if(turret != null)
+
+        // If the node passes the previous checks, it means a turret can be built on this
+        BuildTurret(buildManagerScript.GetTurretToBuild());
+    }
+
+    // Builds a turret on this node
+    void BuildTurret(TurretBlueprintScript blueprint)
+    {
+        // Checks whether the player has enough money for the current selected turret
+        if(PlayerStatsScript.Money < blueprint.cost)
         {
-            Debug.Log("Already has a turret built!"); // TODO
+            Debug.Log("Not enough money!"); // TODO
             return;
         }
 
-        // If the node passes the previous checks, it means a turret can be built on this by the build manager
-        buildManagerScript.BuildTurretOn(this);
+        // Subtract money from player relative to turret cost, build it and play build effect
+        PlayerStatsScript.Money -= blueprint.cost;
+
+        GameObject _turret = (GameObject)Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
+        turret = _turret;
+
+        // Set this for later upgrading the turret
+        turretBlueprint = blueprint;
+
+        GameObject buildEffect = (GameObject)Instantiate(buildManagerScript.buildEffectPrefab, GetBuildPosition(), Quaternion.identity);
+        Destroy(buildEffect, 5f);
+
+        Debug.Log("Turret built. Money left: " + PlayerStatsScript.Money); // TODO
+    }
+
+    // Upgrades the selected turret
+    public void UpgradeTurret()
+    {
+        // Checks whether the player has enough money for the current selected turret
+        if(PlayerStatsScript.Money < turretBlueprint.upgradeCost)
+        {
+            Debug.Log("Not enough money to upgrade!"); // TODO
+            return;
+        }
+
+        // Subtract money from player relative to turret cost, build it and play build effect
+        PlayerStatsScript.Money -= turretBlueprint.upgradeCost;
+
+        // Destroys the base turret
+        Destroy(turret);
+
+        // Replaces it with an upgraded version of it
+        GameObject _turret = (GameObject)Instantiate(turretBlueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
+        turret = _turret;
+
+        GameObject buildEffect = (GameObject)Instantiate(buildManagerScript.buildEffectPrefab, GetBuildPosition(), Quaternion.identity);
+        Destroy(buildEffect, 5f);
+
+        // Sets this node's status to turret is present and upgraded
+        isUpgraded = true;
+
+        Debug.Log("Turret upgraded! Money left: " + PlayerStatsScript.Money); // TODO
+    }
+
+    // Sell the turret built on this node
+    public void SellTurret()
+    {
+        // Turret value is based on its base cost plus half the upgrade cost if it has been upgraded
+        int sellValue = turretBlueprint.GetSellValue();
+        if(isUpgraded)
+        {
+            sellValue += (turretBlueprint.upgradeCost / 2);
+        }
+        PlayerStatsScript.Money += sellValue;
+        sellValue = 0;
+
+        // Sell effect
+        GameObject sellEffect = (GameObject)Instantiate(buildManagerScript.sellEffectPrefab, GetBuildPosition(), Quaternion.identity);
+        Destroy(sellEffect, 5f);
+
+        // Destroy the turret
+        Destroy(turret);
+        turretBlueprint = null;
     }
 
     // Handles the events when the player hovers the mouse over a node
@@ -87,18 +168,18 @@ public class NodeScript : MonoBehaviour
         {
             rend.material.color = notEnoughMoneyColor;
         }
-
-        
     }
 
     // Handles the event where the player exits the mouse off of the node
     void OnMouseExit()
     {
+        /* Piece of code removed because when NodeUI was opened, we couldn't build turret there, so it kept the node selected
         // If nothing can be built on the node, the initial color didn't change, so it doesn't need to be changed again
         if(!buildManagerScript.CanBuild)
         {
             return;
-        }
+        }*/
+
         // Change color back to the original starting color when the mouse exits the node
         rend.material.color = startColor;
     }

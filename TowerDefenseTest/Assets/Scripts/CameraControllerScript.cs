@@ -11,9 +11,6 @@ using UnityEngine;
 public class CameraControllerScript : MonoBehaviour
 {
 
-    // Private variables
-    private bool doMouseMovement = true;
-
     // Public variables
     public float panSpeed = 30f;
     public float panBorderThickness = 10f;
@@ -29,16 +26,6 @@ public class CameraControllerScript : MonoBehaviour
         {
             // TODO change position back to initial
             this.enabled = false;
-            return;
-        }
-
-        // If "ESC" is pressed, disable mouse controles, press again to enable
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            doMouseMovement = !doMouseMovement;
-        }
-        if(doMouseMovement == false)
-        {
             return;
         }
 

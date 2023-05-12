@@ -11,6 +11,7 @@ public class PauseMenuScript : MonoBehaviour
 {
     // Public variables
     public GameObject pauseUI;
+    public string menuScene = "MainMenu";
 
     void Update()
     {
@@ -47,6 +48,8 @@ public class PauseMenuScript : MonoBehaviour
     // Menu button goes back to the main menu
     public void Menu()
     {
-        Debug.Log("Go to Menu"); // TODO
+        TogglePause();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(menuScene);
     }
 }

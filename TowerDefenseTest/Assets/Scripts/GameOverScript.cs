@@ -17,6 +17,7 @@ public class GameOverScript : MonoBehaviour
 
     // Public variables
     public Text roundsSurvivedText;
+    public string menuScene = "MainMenu";
 
     // Unity function like start but it is called on the object's (Game Over screen) enable action instead of the start of the game
     void OnEnable()
@@ -34,7 +35,7 @@ public class GameOverScript : MonoBehaviour
     // Go back to the menu screen
     public void Menu()
     {
-        Debug.Log("Go to menu"); // TODO
+        SceneManager.LoadScene(menuScene);
     }
 
 }

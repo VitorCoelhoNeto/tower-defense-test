@@ -25,3 +25,8 @@ public class MainMenuScript : MonoBehaviour
         Application.Quit();
     }
 }
+
+
+// List of ideas:
+// Video 22 has a lot of comments with cool ideas. 
+// Also: Animation on turret node UI arrow up and down

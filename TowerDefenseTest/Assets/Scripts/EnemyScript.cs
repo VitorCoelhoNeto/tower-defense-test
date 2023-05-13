@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
 * This script is used by the enemies to determine what happens when it takes damage and what happens when it dies  
@@ -16,16 +17,21 @@ public class EnemyScript : MonoBehaviour
     public float startSpeed = 10f;
     [HideInInspector]
     public float speed; // Speed to be calculated for the slow effect. "HideInInspector" because we want it public to allow move script to modify it but not changeable on inspector
-    public float enemyHealth = 100;
+    public float startEnemyHealth = 100;
     public int enemyValue = 25;
     public GameObject deathEffect;
 
+    [Header("Unity Stuff")]
+    public Image healthBar;
+
     // Private variables
     private bool alive;
+    private float enemyHealth;
 
     void Start()
     {
         speed = startSpeed;
+        enemyHealth = startEnemyHealth;
         alive = true;
     }
 
@@ -34,6 +40,9 @@ public class EnemyScript : MonoBehaviour
     {
         // damageTaken is a parameter received based on the damage of the bullet invoked on the bullet script
         enemyHealth -= damageTaken;
+
+        // Health Bar "progress"
+        healthBar.fillAmount = enemyHealth / startEnemyHealth;
 
         // If the health reaches 0, it dies
         if(enemyHealth <= 0)

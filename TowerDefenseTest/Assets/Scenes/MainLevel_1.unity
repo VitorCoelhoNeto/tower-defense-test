@@ -2605,6 +2605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseUI: {fileID: 1993327143}
+  menuScene: MainMenu
 --- !u!1001 &334005599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6885,6 +6886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundsSurvivedText: {fileID: 343225500}
+  menuScene: MainMenu
 --- !u!95 &688883353
 Animator:
   serializedVersion: 4

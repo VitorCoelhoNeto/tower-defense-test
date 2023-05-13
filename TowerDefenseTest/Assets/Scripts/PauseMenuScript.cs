@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 /*
 * This script implements the pause game feature (toggles the pause menu and freezes time)
 *
+* Works in close relationship with the Scene Fader script (SceneFaderScript.cs)
+*
 * Used by GameObjects: GameMaster
 */
 
@@ -11,6 +13,7 @@ public class PauseMenuScript : MonoBehaviour
 {
     // Public variables
     public GameObject pauseUI;
+    public SceneFaderScript sceneFader;
     public string menuScene = "MainMenu";
 
     void Update()
@@ -42,14 +45,13 @@ public class PauseMenuScript : MonoBehaviour
     public void Retry()
     {   
         TogglePause();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     // Menu button goes back to the main menu
     public void Menu()
     {
         TogglePause();
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(menuScene);
+        sceneFader.FadeTo(menuScene);
     }
 }

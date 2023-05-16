@@ -5,7 +5,8 @@ using UnityEngine.UI;
 * This script is used by the enemies to determine what happens when it takes damage and what happens when it dies  
 * (used to be used to determine their position, where to move next and what happens when it reaches the end point but this was moved to EnemyMovementScript.cs)
 *
-* Works in close relationship with the turret, bullet, waypoints and wave spawner scripts (TurretScript.cs, BulletScript.cs, WaypointsScript.cs and WaveSpawnerScript.cs)
+* Works in close relationship with the turret, bullet, waypoints, enemy movement and wave spawner scripts 
+* (TurretScript.cs, BulletScript.cs, WaypointsScript.cs, EnemyMovementScript.cs and WaveSpawnerScript.cs)
 *
 * Used by GameObjects: Enemy prefabs (ATM Enemy)
 */
@@ -65,6 +66,8 @@ public class EnemyScript : MonoBehaviour
         
         GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(effect, 5f);
+
+        WaveSpawnerScript.EnemiesAlive--;
         
         Destroy(gameObject);
     }

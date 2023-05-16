@@ -3,7 +3,7 @@ using UnityEngine;
 /*
 * This script is used by the enemies to determine their position, where it needs to move next and what happens if they reach the end point
 *
-* Works in close relationship with the enemy script (EnemyScript.cs)
+* Works in close relationship with the enemy and WaveSpawner script (EnemyScript.cs and WaveSpawnerScript.cs)
 *
 * Used by GameObjects: Enemy prefabs (ATM Enemy)
 */
@@ -61,6 +61,7 @@ public class EnemyMovementScript : MonoBehaviour
     {
         // The player loses a life and the enemy is destroyed
         PlayerStatsScript.Lives--;
+        WaveSpawnerScript.EnemiesAlive--;
         Destroy(gameObject);
     }
 }

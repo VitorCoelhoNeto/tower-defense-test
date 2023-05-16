@@ -6,7 +6,7 @@ using UnityEngine;
 *
 * Works in close relationship with the shop and Node scripts (ShopScript.cs, NodeScript.cs)
 *
-* Used by GameObjects: None
+* Used by GameObjects: None - This is a class
 */
 [System.Serializable]
 public class TurretBlueprintScript

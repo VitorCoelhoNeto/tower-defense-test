@@ -24,6 +24,11 @@ public class WaveSpawnerScript : MonoBehaviour
     private float countdown = 2f;
     private int waveNum = 0;
 
+    void Start()
+    {
+        EnemiesAlive = 0;
+    }
+
     void Update()
     {
         // Do not start a new wave until all enemies from the current wave have been destroyed

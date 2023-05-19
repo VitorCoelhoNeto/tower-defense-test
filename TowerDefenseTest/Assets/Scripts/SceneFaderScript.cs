@@ -6,7 +6,8 @@ using System.Collections;
 /*
 * This script is used to manage the transitions (fade in and out) between scenes
 *
-* Works in close relationship with the Main Menu, Pause Menu and Game Over scripts (MainMenuScript.cs, PauseMenuScript.cs and GameOverScript.cs)
+* Works in close relationship with the Main Menu, Level Select Menu, Pause Menu and Game Over scripts 
+* (MainMenuScript.cs, LevelSelectorScript.cs, PauseMenuScript.cs and GameOverScript.cs)
 *
 * Used by GameObjects: SceneFader
 */

@@ -3,7 +3,7 @@ using UnityEngine;
 /*
 * This script checks whether the game is over or not according to curret lives left
 *
-* Works in close relationship with the player stats script and the GameOverScript (PlayerStatsScript.cs and GameOverScript.cs)
+* Works in close relationship with the player stats, wave spawner and the GameOver Script (PlayerStatsScript.cs, WaveSpawnerScript.cs and GameOverScript.cs)
 *
 * Used by GameObjects: GameMaster
 */
@@ -38,5 +38,12 @@ public class GameManagerScript : MonoBehaviour
     {
         gameOver = true;
         gameOverUI.SetActive(true);
+    }
+
+    // What happens when the level has been won (shows game won screen and increments 1 to the "levelReached" player pref)
+    public void WinLevel()
+    {
+        Debug.Log("Level won!"); // TODO
+        PlayerPrefs.SetInt("levelReached", PlayerPrefs.GetInt("levelReached", 1) + 1);
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 /*
 * This script is in charge of handling the enemy waves spawning
 *
-* Works in close relationship with the enemy, enemy movement, WaveClass and PlayerStats scripts (EnemyScript.cs, EnemyMovementScript.cs, WaveClassScript.cs and PlayerStatsScript)
+* Works in close relationship with the enemy, enemy movement, WaveClass, GameManagerScript and PlayerStats scripts 
+* (EnemyScript.cs, EnemyMovementScript.cs, WaveClassScript.cs GameManagerScript.cs and PlayerStatsScript.cs)
 *
 * Used by GameObjects: GameMaster
 */
@@ -19,6 +20,7 @@ public class WaveSpawnerScript : MonoBehaviour
     public Text waveCountdownTimer;
     public float timeBetweenWaves = 5f;
     public static int EnemiesAlive = 0;
+    public GameManagerScript gameManagerScript;
 
     // Private variables
     private float countdown = 2f;
@@ -58,6 +60,8 @@ public class WaveSpawnerScript : MonoBehaviour
         // For each wave in the list, spawn an enemy with the values from that specific wave in the list (defined in WaveClassScript.cs)
         WaveClassScript wave = waves[waveNum];
 
+        EnemiesAlive = wave.enemyCount; // This is decremented when an enemy dies or reaches the end of the level (Enemy and Enemy Movement scripts)
+
         for(int i = 0; i < wave.enemyCount; i++)
         {
             SpawnEnemy(wave.enemy);
@@ -65,11 +69,11 @@ public class WaveSpawnerScript : MonoBehaviour
         }
         waveNum += 1;
 
-        // When all the waves have been defeated, the level has been won, hence, disable the wave spawner
+        // When all the waves have been defeated, disable the wave spawner (game is not won yet until all enemies from the last wave are defeated)
         if(waveNum == waves.Length)
         {
-           Debug.Log("Level won!"); // TODO
-           this.enabled = false;
+            gameManagerScript.WinLevel();
+            this.enabled = false;
         }
     }
 
@@ -77,6 +81,5 @@ public class WaveSpawnerScript : MonoBehaviour
     void SpawnEnemy(GameObject enemyPrefab)
     {
         Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        EnemiesAlive++; // This is decremented when an enemy dies or reaches the end of the level (Enemy and Enemy Movement scripts)
     }
 }

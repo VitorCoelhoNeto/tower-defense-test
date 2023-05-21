@@ -2550,6 +2550,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 854056964}
   waveCountdownTimer: {fileID: 1616645434}
   timeBetweenWaves: 5
+  gameManagerScript: {fileID: 331958625}
 --- !u!4 &331958622
 Transform:
   m_ObjectHideFlags: 0

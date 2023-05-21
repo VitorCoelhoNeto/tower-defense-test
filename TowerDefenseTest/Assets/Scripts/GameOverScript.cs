@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /*
-* This script is used to manage what the game over screen shows, such as no. of rounds survived
+* This script is used to manage what the game over screen shows
 *
 * Works in close relationship with the game manager, scene fader and player stats scripts (GameManagerScript.cs, SceneFaderScript.cs and PlayerStatsScript.cs)
 *
@@ -16,16 +15,8 @@ public class GameOverScript : MonoBehaviour
     //int MAIN_SCENE = 0;
 
     // Public variables
-    public Text roundsSurvivedText;
     public string menuScene = "MainMenu";
     public SceneFaderScript sceneFader;
-
-    // Unity function like start but it is called on the object's (Game Over screen) enable action instead of the start of the game
-    void OnEnable()
-    {
-        // Update the number of rounds survived
-        roundsSurvivedText.text = PlayerStatsScript.roundsSurvived.ToString();
-    }
 
     // Retry button logic, retry game
     public void Retry()

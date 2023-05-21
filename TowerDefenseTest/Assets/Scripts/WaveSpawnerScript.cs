@@ -39,6 +39,13 @@ public class WaveSpawnerScript : MonoBehaviour
             return;
         }
 
+        // When all the waves have been defeated, disable the wave spawner (game is not won yet until all enemies from the last wave are defeated)
+        if(waveNum == waves.Length)
+        {
+            gameManagerScript.WinLevel();
+            this.enabled = false;
+        }
+
         // When timer reaches 0 and all enemies from current wave are destroyed, begin next wave and update the countdown on UI
         if(countdown <= 0f)
         {
@@ -69,12 +76,6 @@ public class WaveSpawnerScript : MonoBehaviour
         }
         waveNum += 1;
 
-        // When all the waves have been defeated, disable the wave spawner (game is not won yet until all enemies from the last wave are defeated)
-        if(waveNum == waves.Length)
-        {
-            gameManagerScript.WinLevel();
-            this.enabled = false;
-        }
     }
 
     // Instantiate (spawn) an enemy

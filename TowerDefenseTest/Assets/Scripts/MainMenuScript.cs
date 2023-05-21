@@ -34,4 +34,3 @@ public class MainMenuScript : MonoBehaviour
 // Video 22 has a lot of comments with cool ideas. 
 // Also: Animation on turret node UI arrow up and down
 // Also: Health bars only appear after enemies take damage
-// Video 26 has a nice idea on time acceleration button/slider (similar to PvZ2 speed up button)

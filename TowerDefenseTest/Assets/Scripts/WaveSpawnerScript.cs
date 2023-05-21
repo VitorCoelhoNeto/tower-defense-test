@@ -11,7 +11,7 @@ using UnityEngine.UI;
 * Used by GameObjects: GameMaster
 */
 
-// TODO: Only begin new wave on previous one is cleared, or when player wants new wave to spawn
+// TODO: Begin new wave when player wants new wave to spawn
 public class WaveSpawnerScript : MonoBehaviour
 {   
     // Public variables

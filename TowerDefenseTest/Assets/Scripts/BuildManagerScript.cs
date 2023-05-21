@@ -29,7 +29,7 @@ public class BuildManagerScript : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.Log("Error - more than one build manager!"); // TODO
+            Debug.Log("Error - more than one build manager!");
             return;
         }
         instance = this;

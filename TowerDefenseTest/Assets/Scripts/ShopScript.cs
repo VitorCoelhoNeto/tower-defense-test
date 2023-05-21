@@ -30,21 +30,21 @@ public class ShopScript : MonoBehaviour
     // Select the standard turret
     public void SelectStdTurret()
     {
-        Debug.Log("Std Turret Selected"); // TODO
+        Debug.Log("Std Turret Selected");
         buildManagerScript.SelectTurretToBuild(standardTurret);
     }
 
     // Select the missile launcher turret
     public void SelectMissileLauncher()
     {
-        Debug.Log("Missile Launcher Selected"); // TODO
+        Debug.Log("Missile Launcher Selected");
         buildManagerScript.SelectTurretToBuild(missileTurret);
     }
 
     // Select the Laser turret
     public void SelectLaserTurret()
     {
-        Debug.Log("Laser Turret Selected"); // TODO
+        Debug.Log("Laser Turret Selected");
         buildManagerScript.SelectTurretToBuild(laserTurret);
     }
 

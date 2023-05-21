@@ -75,7 +75,7 @@ public class NodeScript : MonoBehaviour
         // Checks whether the player has enough money for the current selected turret
         if(PlayerStatsScript.Money < blueprint.cost)
         {
-            Debug.Log("Not enough money!"); // TODO
+            Debug.Log("Not enough money!"); // TODO : Show player a toast warning this
             return;
         }
 
@@ -91,7 +91,7 @@ public class NodeScript : MonoBehaviour
         GameObject buildEffect = (GameObject)Instantiate(buildManagerScript.buildEffectPrefab, GetBuildPosition(), Quaternion.identity);
         Destroy(buildEffect, 5f);
 
-        Debug.Log("Turret built. Money left: " + PlayerStatsScript.Money); // TODO
+        Debug.Log("Turret built. Money left: " + PlayerStatsScript.Money);
     }
 
     // Upgrades the selected turret
@@ -100,7 +100,7 @@ public class NodeScript : MonoBehaviour
         // Checks whether the player has enough money for the current selected turret
         if(PlayerStatsScript.Money < turretBlueprint.upgradeCost)
         {
-            Debug.Log("Not enough money to upgrade!"); // TODO
+            Debug.Log("Not enough money to upgrade!"); // TODO : Show player a toast warning this
             return;
         }
 
@@ -120,7 +120,7 @@ public class NodeScript : MonoBehaviour
         // Sets this node's status to turret is present and upgraded
         isUpgraded = true;
 
-        Debug.Log("Turret upgraded! Money left: " + PlayerStatsScript.Money); // TODO
+        Debug.Log("Turret upgraded! Money left: " + PlayerStatsScript.Money);
     }
 
     // Sell the turret built on this node

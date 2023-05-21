@@ -20,8 +20,8 @@ public class LevelCompleteScript : MonoBehaviour
     // Continue button logic. Continue to next level
     public void Continue()
     {
-        // TODO FIX THIS!!!, when we complete level 1, level unlocked is 2, if we complete level 2, its 3, but if we complete 1 again it goes back to 2
-        // This should also be done in the "WinLevel", not here, because if we press "Menu", the next level isn't actually unlocked TODO
+        // TODO  PRIORITY 1 FIX THIS!!!, when we complete level 1, level unlocked is 2, if we complete level 2, its 3, but if we complete 1 again it goes back to 2
+        // This should also be done in the "WinLevel", not here, because if we press "Menu", the next level isn't actually unlocked
         PlayerPrefs.SetInt("levelReached", levelToUnlock); 
         sceneFader.FadeTo(nextLevel);
     }

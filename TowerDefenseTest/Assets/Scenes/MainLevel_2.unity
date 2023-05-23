@@ -15152,6 +15152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1475288871}
   - component: {fileID: 1475288872}
+  - component: {fileID: 1475288873}
   m_Layer: 0
   m_Name: NodeUI
   m_TagString: Untagged
@@ -15191,6 +15192,26 @@ MonoBehaviour:
   upgradeCost: {fileID: 1623380525}
   sellValue: {fileID: 1239519358}
   turretUpgradeButton: {fileID: 482646272}
+--- !u!95 &1475288873
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475288870}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b8a61daae44d774e90a26fed1d1d4fc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1479018400
 PrefabInstance:
   m_ObjectHideFlags: 0
